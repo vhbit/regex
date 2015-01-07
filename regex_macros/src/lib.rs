@@ -18,7 +18,7 @@
        html_favicon_url = "http://www.rust-lang.org/favicon.ico",
        html_root_url = "http://doc.rust-lang.org/nightly/")]
 
-#![feature(associated_types, plugin_registrar, quote)]
+#![feature(plugin_registrar, quote)]
 
 extern crate regex;
 extern crate syntax;
@@ -85,7 +85,7 @@ fn native(cx: &mut ExtCtxt, sp: codemap::Span, tts: &[ast::TokenTree])
     let re = match Regex::new(regex.as_slice()) {
         Ok(re) => re,
         Err(err) => {
-            cx.span_err(sp, err.to_string().as_slice());
+            cx.span_err(sp, format!("{:?}", err).as_slice());
             return DummyResult::any(sp)
         }
     };

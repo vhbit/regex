@@ -99,7 +99,7 @@ macro_rules! noparse(
             let re = $re;
             match Regex::new(re) {
                 Err(_) => {},
-                Ok(_) => panic!("Regex '{}' should cause a parse error.", re),
+                Ok(_) => panic!("Regex '{:?}' should cause a parse error.", re),
             }
         }
     );
@@ -158,10 +158,10 @@ macro_rules! mat(
             // actual capture groups to match test set.
             let mut sgot = got.as_slice();
             if sgot.len() > expected.len() {
-                sgot = sgot[0..expected.len()]
+                sgot = sgot.slice_to(expected.len)
             }
             if expected != sgot {
-                panic!("For RE '{}' against '{}', expected '{}' but got '{}'",
+                panic!("For RE '{:?}' against '{}', expected '{:?}' but got '{:?}'",
                       $re, text, expected, sgot);
             }
         }
